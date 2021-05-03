@@ -58,6 +58,7 @@ output `1 1 E`
 output `1 1 E`
 
 `http://localhost:3000/stats` provides additional statistics 
+
 output `{"robotsTotal":1,"robotsLost":0,"worldExplored":"16.67%","configs":14,"robotsAllRuns":26,"robotsLostAllRuns":7}`
 
 #### POST endpoint
