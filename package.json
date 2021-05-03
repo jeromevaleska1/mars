@@ -1,0 +1,25 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "doc": "jsdoc ./services",
+    "test": "tap"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "got": "^11.8.2",
+    "jsdoc": "^3.6.6",
+    "tap": "^15.0.5"
+  },
+  "dependencies": {
+    "ajv": "^6.12.6",
+    "express": "^4.17.1",
+    "sqlite": "^4.0.21",
+    "sqlite3": "^5.0.2"
+  }
+}
