@@ -5,7 +5,9 @@ const input = new (require('./services/input'));
     process.stdout.write(welcomeStr + '\n')
     process.stdin.on('data', async data => {
         try {
-            console.log(await input.processInput(data.toString().replace('\n', '')))
+            const useExtendedOutput = process.argv[2] === 'extended'
+            const output = await input.processInput(data.toString(), useExtendedOutput)
+            console.log(output.replace(/\n$/, ''))
             console.log(welcomeStr)
         } catch (err) {
             console.log(err.message)

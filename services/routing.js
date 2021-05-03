@@ -16,6 +16,9 @@ class Routing {
         })()
     }
 
+    /**
+     * inits routing
+     */
     init() {
         this.app.use('/doc', express.static('./out'))
         this.app.use(express.json())

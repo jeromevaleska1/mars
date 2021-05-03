@@ -1,5 +1,6 @@
 const Move = require('./move')
 const DB = require('./db')
+const colors = require('colors')
 const assert = require('assert')
 class Input {
     /**
@@ -32,31 +33,39 @@ class Input {
         }
     }
 
+    /**
+     * adds styles to output
+     * @param output
+     */
+    styleOutput(output){
+         return colors.bold(colors.green(output))
+    }
 
     /**
      * processing input/output according to its type
-     * @param data
+     * @param data string
+     * @param useExtendedOutput boolean
      * @returns {string}
      */
-    async processInput(data) {
+    async processInput(data, useExtendedOutput = false) {
         assert(/^[a-zA-Z0-9\s]*$/.test(data), 'incorrect input')
-        switch (this.getInputType(data)) {
+        const inputType = this.getInputType(data)
+        switch (inputType) {
             case 'boundaries':
                 const boundaries = this.move.setBoundaries(data);
                 const  res = await this.db.insertBoundaries(boundaries)
                 this.boundariesId = res.id;
-                return '\n'
+                return useExtendedOutput ? `${this.styleOutput(inputType)} command received ` : '\n'
             case 'orientation':
                 this.move.decodePosition(data);
                 await this.db.insertPosition(data)
-                return this.move.getPosition()
+                return useExtendedOutput ? `${this.styleOutput(inputType)} command received \n` + this.move.getPosition(): this.move.getPosition()
             case 'instruction':
                 this.move.decodeInstruction(data);
                 const robotStatus = this.move.getRobotStatus() ? 1 : 0;
                 await this.db.insertInstruction(data, robotStatus)
                 await this.db.insertStats(this.move.getRobotStats())
-
-                return this.move.getPosition()
+                return useExtendedOutput ? `${this.styleOutput(inputType)} command received \n` + this.move.getPosition() : this.move.getPosition()
         }
     }
 

@@ -1,6 +1,7 @@
 const Input = require('../services/input')
 const input = new Input()
 const {test} = require('tap')
+const colors = require('colors')
 
 test('input type evaluation', async ({same}) => {
     await input.init()
@@ -16,7 +17,12 @@ test('process input', async ({same, rejects}) => {
     input.move.isRobotLost = 1
     same(await input.processInput('RFRFRFRF'), '1 1 E LOST\n')
     rejects(async () => await input.processInput('A B C D'), 'unknown input type')
+// extended output
 
+    const getCommand = (command) => colors.bold(colors.green(command)) + ' command received '
+    same(await input.processInput('5 3', true), getCommand('boundaries'))
+    same(await input.processInput('1 1 E', true), getCommand('orientation') + '\n1 1 E\n')
+    same(await input.processInput('RFRFRFRF', true), getCommand('instruction') + '\n1 1 E\n')
 
 })
 test('get robot stats', async ({same}) => {
@@ -37,4 +43,10 @@ test('get robot stats', async ({same}) => {
         'Amount of boundaries set'
     ])
 
+})
+test('output styling', ({equal, end}) => {
+    const output = '11111'
+    equal(input.styleOutput(output), colors.bold(colors.green(output)))
+    console.log()
+    end()
 })
