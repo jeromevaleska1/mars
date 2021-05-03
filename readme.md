@@ -12,7 +12,7 @@ Each class has a corresponding test suit in **test** directory
 `docker pull jeromevaleska/mars`
 to get the image
 
-`docker run -d jeromevaleska/mars -p 3000:3000`
+`docker run -d -p 3000:3000 jeromevaleska/mars `
 to run container
 ### Documentation
 after image is up and running services and API methods documentation is available at [http://localhost:3000/doc](http://localhost:3000/doc)
